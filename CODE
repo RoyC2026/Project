@@ -1,0 +1,132 @@
+## Old Code 
+## pygame.draw.rect(screen, PINK, (player_pos[0], player_pos[1], player_size, player_size))
+## pygame.draw.rect(screen, RED, (fruit_pos[0], fruit_pos[1], fruit_size, fruit_size))
+
+import pygame
+import turtle
+import random
+import math
+
+
+# Initialize Pygame
+pygame.init()
+
+# Screen Settings
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Hungry Worm")
+
+# Colors
+WHITE = (255, 255, 255)
+PINK = (255,192,203)
+RED = (255, 0, 0)
+GREEN = (0,255,0)
+
+# Game variables
+player_size = 50
+player_pos = [WIDTH // 2, HEIGHT - 2 * player_size]
+player_y = HEIGHT - player_size
+player_y_change = 0
+up_speed = 10
+fruit_size = 50
+fruit_pos = [random.randint(0, WIDTH-fruit_size), 0]
+fruit_fall_speed = 10
+score = 0
+
+#
+class pred(turtle.Turtle):
+    def init(self, color, xpos, ypos, dx):
+        super().init(shape='rect')
+        self.shapesize(5,5)
+        self.up()
+        self.c = color
+        self.color(self.c)
+        self.ypos = ypos
+        self.xpos = xpos
+        self.goto(self.xpos, self.ypos)
+        self.dx = dx 
+        
+# Limits
+orange, brown, grey, black, purple = [], [], [], [], []
+predators = [orange, brown, grey, black, purple]
+
+y1 = 0
+y2 = 180
+y3 = 340
+y4 = 560
+y5 = 720
+def up_pos():
+    global y1
+    global y2
+    global y3
+    global y4
+    global y5
+    for d in predators:
+        for j in d:
+            j.ypos -= 30    
+        y1, y2, y3, y4,y5 = y1-30, y2-30, y3-30, y4-30, y5-30
+        
+for d in predators:
+        delay = random.random()
+        if len(d)<20 and delay<0.01:
+            if d == orange:
+                pygame.draw.rect(screen, RED, y1, -5) 
+                pred.list = d
+                d.append(pred)
+            if d == brown:
+                pygame.draw.rect(screen, RED, y2, -5)
+                pred.list = d
+                d.append(pred)
+            if d == grey:
+                pygame.draw.rect(screen, RED, y3, 2)
+                pred.list = d
+                d.append(pred)
+            if d == black:
+                pygame.draw.rect(screen, RED, y4, 2)
+                pred.list = i
+                d.append(pred)
+            if d == purple:
+                pygame.draw.rect(screen, RED, y5, 2)
+                pred.list = d
+                d.append(pred)
+
+clock = pygame.time.Clock()
+
+game_over = False
+
+while not game_over:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_over = True
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP] and player_pos[0] > HEIGHT + player_size:
+        player_y_change = -up_speed
+    if keys[pygame.K_LEFT] and player_pos[0] > 0:
+        player_pos[0] -= 10
+    if keys[pygame.K_RIGHT] and player_pos[0] < WIDTH - player_size:
+        player_pos[0] += 10
+
+    screen.fill(GREEN)
+
+    # Fruit Falling
+    if fruit_pos[1] >= 0 and fruit_pos[1] < HEIGHT:
+        fruit_pos[1] += fruit_fall_speed
+    else:
+        fruit_pos[1] = 0
+        fruit_pos[0] = random.randint(0, WIDTH-fruit_size)
+        score += 1
+
+    # Collision
+    if player_pos[1] - fruit_pos[1] < fruit_size and player_pos[0] < fruit_pos[0] < player_pos[0] + player_size:
+        score += 1
+        fruit_pos[1] = 0
+        fruit_pos[0] = random.randint(0, WIDTH-fruit_size)
+
+    pygame.draw.rect(screen, PINK, (player_pos[0], player_pos[1], player_size, player_size))
+    pygame.draw.rect(screen, RED, (fruit_pos[0], fruit_pos[1], fruit_size, fruit_size))
+
+    pygame.display.update()
+    clock.tick(30)
+
+pygame.quit()
