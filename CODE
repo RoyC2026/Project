@@ -21,7 +21,11 @@ WHITE = (255, 255, 255)
 PINK = (255,192,203)
 RED = (255, 0, 0)
 GREEN = (0,255,0)
-
+ORANGE = (255, 165, 0)
+BROWN = (165, 42, 42)
+GREY = (128, 128, 128)
+BLACK = (0,0,0)
+PURPLE = (128, 0, 128)
 # Game variables
 player_size = 50
 player_pos = [WIDTH // 2, HEIGHT - 2 * player_size]
@@ -70,23 +74,23 @@ for d in predators:
         delay = random.random()
         if len(d)<20 and delay<0.01:
             if d == orange:
-                pygame.draw.rect(screen, RED, y1, -5) 
+                pygame.draw.rect(screen, ORANGE, y1, -5) 
                 pred.list = d
                 d.append(pred)
             if d == brown:
-                pygame.draw.rect(screen, RED, y2, -5)
+                pygame.draw.rect(screen, BROWN, y2, -5)
                 pred.list = d
                 d.append(pred)
             if d == grey:
-                pygame.draw.rect(screen, RED, y3, 2)
+                pygame.draw.rect(screen, GREY, y3, -5)
                 pred.list = d
                 d.append(pred)
             if d == black:
-                pygame.draw.rect(screen, RED, y4, 2)
-                pred.list = i
+                pygame.draw.rect(screen, BLACK, y4, -5)
+                pred.list = d
                 d.append(pred)
             if d == purple:
-                pygame.draw.rect(screen, RED, y5, 2)
+                pygame.draw.rect(screen, PURPLE, y5, -5)
                 pred.list = d
                 d.append(pred)
 
